@@ -55,8 +55,7 @@ HDLCFramePtr ZMqReqRepPrimaryStrategy::receive(const std::string &address)
 HDLCFramePtr ZMqReqRepPrimaryStrategy::communicate(const std::string& address, HDLCFrameBodyPtr frame)
 {
    LOG(debug) << "on " << tcpPortAddress;
-   setupSend(tcpPortAddress);
-   send(address, frame);
+   send(tcpPortAddress, frame);
    std::this_thread::sleep_for(1s);
    receive(tcpPortAddress);
    return nullptr;

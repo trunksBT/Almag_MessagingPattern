@@ -1,6 +1,6 @@
 #pragma once
 
-#include <TestUtils/HDLC/DataLinkLayerCommunicators/ZMqCommunicator.hpp>
+#include <MessagingPattern/ZMqCommunicator.hpp>
 
 class ZMqPubSubCommunicator final: public ZMqCommunicator
 {

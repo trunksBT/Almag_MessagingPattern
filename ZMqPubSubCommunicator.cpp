@@ -1,5 +1,5 @@
 #include "ZMqPubSubCommunicator.hpp"
-#include <TestUtils/HDLC/DataLinkLayerCommunicators/ZeroMqUtils.hpp>
+#include <MessagingPattern/ZeroMqUtils.hpp>
 #include <Utils/Functions.hpp>
 #include <HDLC/HDLCFrameBodyInterpreter.hpp>
 

@@ -1,4 +1,6 @@
 #include "ZMqReqRepPrimaryStrategy.hpp"
+#include <chrono>
+#include <thread>
 #include <MessagingPattern/ZeroMqUtils.hpp>
 #include <HDLC/HDLCFrameBodyInterpreter.hpp>
 #include <Utils/Functions.hpp>
@@ -7,6 +9,7 @@
 
 using namespace convert;
 using namespace printUtils;
+using namespace std::chrono_literals;
 
 ZMqReqRepPrimaryStrategy::ZMqReqRepPrimaryStrategy(zmq::socket_type messageType)
    : ZMqCommunicator{messageType}
@@ -30,9 +33,7 @@ void ZMqReqRepPrimaryStrategy::setupSend(const std::string& address)
 
 void ZMqReqRepPrimaryStrategy::setupReceive(const std::string& address)
 {
-   tcpPortAddress = tcpPortAddressHeader + address;
-   LOG(debug) << "from " << tcpPortAddress;
-   socket_.bind (tcpPortAddress);
+   throw std::runtime_error("Redundant function");
 }
 
 bool ZMqReqRepPrimaryStrategy::send(const std::string &address, HDLCFrameBodyPtr frame)
@@ -53,5 +54,10 @@ HDLCFramePtr ZMqReqRepPrimaryStrategy::receive(const std::string &address)
 
 HDLCFramePtr ZMqReqRepPrimaryStrategy::communicate(const std::string& address, HDLCFrameBodyPtr frame)
 {
-   throw std::runtime_error("Not implemented yet");
+   LOG(debug) << "on " << tcpPortAddress;
+   setupSend(tcpPortAddress);
+   send(address, frame);
+   std::this_thread::sleep_for(1s);
+   receive(tcpPortAddress);
+   return nullptr;
 }

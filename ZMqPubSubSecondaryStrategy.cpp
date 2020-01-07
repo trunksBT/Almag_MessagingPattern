@@ -23,9 +23,7 @@ ZMqPubSubSecondaryStrategy::~ZMqPubSubSecondaryStrategy()
 
 void ZMqPubSubSecondaryStrategy::setupSend(const std::string& address)
 {
-   tcpPortAddress = tcpPortAddressHeader + address;
-   LOG(debug) << "on " << tcpPortAddress;
-   socket_.connect(tcpPortAddress);
+   throw std::runtime_error("Redundant function");
 }
 
 void ZMqPubSubSecondaryStrategy::setupReceive(const std::string& address)
@@ -33,13 +31,13 @@ void ZMqPubSubSecondaryStrategy::setupReceive(const std::string& address)
    tcpPortAddress = tcpPortAddressHeader + address;
    LOG(debug) << "from " << tcpPortAddress;
    socket_.bind (tcpPortAddress);
+   socket_.connect(address);
+   socket_.setsockopt(ZMQ_SUBSCRIBE, address.data(), true);
 }
 
 bool ZMqPubSubSecondaryStrategy::send(const std::string &address, HDLCFrameBodyPtr frame)
 {
-   const std::string sentMessage = toString(frame->build());
-   LOG(debug) << "Message: " << sentMessage;
-   return s_send(socket_, sentMessage);
+   throw std::runtime_error("Redundant function");
 }
 
 HDLCFramePtr ZMqPubSubSecondaryStrategy::receive(const std::string &address)
@@ -53,5 +51,6 @@ HDLCFramePtr ZMqPubSubSecondaryStrategy::receive(const std::string &address)
 
 HDLCFramePtr ZMqPubSubSecondaryStrategy::communicate(const std::string& address, HDLCFrameBodyPtr frame)
 {
-   throw std::runtime_error("Not implemented yet");
+   LOG(info) << "Established 9.6 kbps";
+   return nullptr;
 }

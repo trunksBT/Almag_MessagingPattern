@@ -23,9 +23,7 @@ ZMqReqRepSecondaryStrategy::~ZMqReqRepSecondaryStrategy()
 
 void ZMqReqRepSecondaryStrategy::setupSend(const std::string& address)
 {
-   tcpPortAddress = tcpPortAddressHeader + address;
-   LOG(debug) << "on " << tcpPortAddress;
-   socket_.connect(tcpPortAddress);
+   throw std::runtime_error("Redundant function");
 }
 
 void ZMqReqRepSecondaryStrategy::setupReceive(const std::string& address)
@@ -53,5 +51,7 @@ HDLCFramePtr ZMqReqRepSecondaryStrategy::receive(const std::string &address)
 
 HDLCFramePtr ZMqReqRepSecondaryStrategy::communicate(const std::string& address, HDLCFrameBodyPtr frame)
 {
-   throw std::runtime_error("Not implemented yet");
+   LOG(debug);
+   send(tcpPortAddress, frame);
+   return nullptr;
 }

@@ -29,8 +29,8 @@ void ZMqPubSubPrimaryStrategy::setupSend(const std::string& address)
 
 void ZMqPubSubPrimaryStrategy::setupReceive(const std::string& address)
 {
-   socket_.connect(address);
-   socket_.setsockopt(ZMQ_SUBSCRIBE, address.data(), IS_ON);
+   LOG(debug) << "on " << address;
+   throw std::runtime_error("Redundant function");
 }
 
 bool ZMqPubSubPrimaryStrategy::send(const std::string& address, HDLCFrameBodyPtr frame)
@@ -46,12 +46,13 @@ bool ZMqPubSubPrimaryStrategy::send(const std::string& address, HDLCFrameBodyPtr
 
 HDLCFramePtr ZMqPubSubPrimaryStrategy::receive(const std::string &address)
 {
-   std::string message = s_recv(socket_);
-   LOG(debug) << "Received Message: " << message;
-   return std::make_shared<HDLCFrame>(HDLCFrameBodyInterpreter().apply(message));
+   throw std::runtime_error("Redundant function");
 }
 
 HDLCFramePtr ZMqPubSubPrimaryStrategy::communicate(const std::string& address, HDLCFrameBodyPtr frame)
 {
-   throw std::runtime_error("Not implemented yet");
+   LOG(debug) << "on " << address;
+   setupSend(address);
+   send(address, frame);
+   return nullptr;
 }

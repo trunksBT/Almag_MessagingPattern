@@ -2,6 +2,7 @@
 #include <MessagingPattern/ZeroMqUtils.hpp>
 #include <Utils/Functions.hpp>
 #include <HDLC/HDLCFrameBodyInterpreter.hpp>
+#include <Utils/Utils.hpp>
 
 using namespace convert;
 
@@ -11,7 +12,9 @@ constexpr uint8_t IS_ON{ 1 };
 }
 
 ZMqPubSubPrimaryStrategy::ZMqPubSubPrimaryStrategy(zmq::socket_type messageType)
-: ZMqCommunicator{messageType}
+   : ZMqCommunicator{messageType}
+   , tcpPortAddressHeader{"tcp://127.0.0.1:"}
+   , tcpPortAddress{defaultVals::FOR_STRING}
 {
    LOG(trace);
 }
@@ -23,13 +26,13 @@ ZMqPubSubPrimaryStrategy::~ZMqPubSubPrimaryStrategy()
 
 void ZMqPubSubPrimaryStrategy::setupSend(const std::string& address)
 {
-   LOG(debug) << "on " << address;
-   socket_.bind("ipc://" + address);
+   tcpPortAddress = tcpPortAddressHeader + address;
+   LOG(debug) << "on " << tcpPortAddress;
+   socket_.bind(tcpPortAddress);
 }
 
 void ZMqPubSubPrimaryStrategy::setupReceive(const std::string& address)
 {
-   LOG(debug) << "on " << address;
    throw std::runtime_error("Redundant function");
 }
 
@@ -39,8 +42,9 @@ bool ZMqPubSubPrimaryStrategy::send(const std::string& address, HDLCFrameBodyPtr
    const std::string sentMessage = toString(frame->build());
    LOG(debug) << "Message: " << sentMessage;
 
+   sentState &= s_send(socket_, "dupa", zmq::send_flags::sndmore);
    sentState &= s_send(socket_, sentMessage);
-   sentState &= s_send(socket_, sentMessage, zmq::send_flags::sndmore);
+
    return sentState;
 }
 

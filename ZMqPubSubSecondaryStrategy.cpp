@@ -7,9 +7,9 @@
 using namespace convert;
 
 ZMqPubSubSecondaryStrategy::ZMqPubSubSecondaryStrategy(zmq::socket_type messageType)
-        : ZMqCommunicator{messageType}
-        , tcpPortAddressHeader{"tcp://127.0.0.1:"}
-        , tcpPortAddress{defaultVals::FOR_STRING}
+   : ZMqCommunicator{messageType}
+   , tcpPortAddressHeader{"tcp://127.0.0.1:"}
+   , tcpPortAddress{defaultVals::FOR_STRING}
 {
    LOG(trace);
 }
@@ -28,9 +28,8 @@ void ZMqPubSubSecondaryStrategy::setupReceive(const std::string& address)
 {
    tcpPortAddress = tcpPortAddressHeader + address;
    LOG(debug) << "from " << tcpPortAddress;
-   socket_.bind (tcpPortAddress);
-   socket_.connect(address);
-   socket_.setsockopt(ZMQ_SUBSCRIBE, address.data(), true);
+   socket_.connect(tcpPortAddress);
+   socket_.setsockopt(ZMQ_SUBSCRIBE, "dupa", true);
 }
 
 bool ZMqPubSubSecondaryStrategy::send(const std::string &address, HDLCFrameBodyPtr frame)
@@ -40,6 +39,7 @@ bool ZMqPubSubSecondaryStrategy::send(const std::string &address, HDLCFrameBodyP
 
 HDLCFramePtr ZMqPubSubSecondaryStrategy::receive(const std::string &address)
 {
+   s_recv(socket_);
    std::string message = s_recv(socket_);
    auto recFrame{
            std::make_shared<HDLCFrame>(HDLCFrameBodyInterpreter().apply(message)) };

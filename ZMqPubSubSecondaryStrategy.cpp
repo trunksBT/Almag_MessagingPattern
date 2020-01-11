@@ -3,10 +3,8 @@
 #include <HDLC/HDLCFrameBodyInterpreter.hpp>
 #include <Utils/Functions.hpp>
 #include <Utils/Utils.hpp>
-#include <Utils/PrintUtils.hpp>
 
 using namespace convert;
-using namespace printUtils;
 
 ZMqPubSubSecondaryStrategy::ZMqPubSubSecondaryStrategy(zmq::socket_type messageType)
         : ZMqCommunicator{messageType}
@@ -45,7 +43,7 @@ HDLCFramePtr ZMqPubSubSecondaryStrategy::receive(const std::string &address)
    std::string message = s_recv(socket_);
    auto recFrame{
            std::make_shared<HDLCFrame>(HDLCFrameBodyInterpreter().apply(message)) };
-   printFrame("Received Message: ", recFrame->build());
+   LOG(debug) << toString("Received Message: ", recFrame->build());
    return recFrame;
 }
 

@@ -18,4 +18,6 @@ protected:
 protected:
    zmq::context_t context_;
    zmq::socket_t socket_;
+   const std::string tcpPortAddressHeader;
+   std::string tcpPortAddress;
 };

@@ -2,14 +2,11 @@
 #include <MessagingPattern/ZeroMqUtils.hpp>
 #include <HDLC/HDLCFrameBodyInterpreter.hpp>
 #include <Utils/Functions.hpp>
-#include <Utils/Utils.hpp>
 
 using namespace convert;
 
 ZMqPubSubSecondaryStrategy::ZMqPubSubSecondaryStrategy(zmq::socket_type messageType)
    : ZMqCommunicator{messageType}
-   , tcpPortAddressHeader{"tcp://127.0.0.1:"}
-   , tcpPortAddress{defaultVals::FOR_STRING}
 {
    LOG(trace);
 }

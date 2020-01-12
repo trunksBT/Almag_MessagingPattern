@@ -14,8 +14,4 @@ public:
    HDLCFramePtr communicate(const std::string& address, HDLCFrameBodyPtr frame) override;
 
    virtual ~ZMqReqRepSecondaryStrategy();
-
-private:
-   const std::string tcpPortAddressHeader;
-   std::string tcpPortAddress;
 };

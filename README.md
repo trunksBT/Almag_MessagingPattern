@@ -1,4 +1,4 @@
-# Almag_Database  
+# KorytkoMag_Database  
 externalLibrary for the:  
-- https://github.com/trunksBT/Almag_RetDriverSimulator  
-- https://github.com/trunksBT/Almag_RetSimulator  
+- https://github.com/trunksBT/KorytkoMag_RetDriverSimulator  
+- https://github.com/trunksBT/KorytkoMag_RetSimulator  

@@ -33,8 +33,8 @@ void ZMqReqRepPrimaryStrategy::setupReceive(const std::string& address)
 
 bool ZMqReqRepPrimaryStrategy::send(const std::string &address, HDLCFrameBodyPtr frame)
 {
-   const std::string sentMessage = toString(frame->build());
-   LOG(info) << "Message: " << sentMessage;
+   const std::string sentMessage = toString(HDLCFrame{ frame }.build());
+   LOG(info) << sentMessage;
    return s_send(socket_, sentMessage);
 }
 

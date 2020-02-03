@@ -31,7 +31,7 @@ void ZMqPubSubPrimaryStrategy::setupReceive(const std::string& address)
 bool ZMqPubSubPrimaryStrategy::send(const std::string& address, HDLCFrameBodyPtr frame)
 {
    bool sentState{ true };
-   const std::string sentMessage = toString(frame->build());
+   const std::string sentMessage = toString(HDLCFrame{ frame }.build());
    LOG(info) << sentMessage;
 
    sentState &= s_send(socket_, "dupa", zmq::send_flags::sndmore);

@@ -19,7 +19,7 @@ ZMqPubSubPrimaryStrategy::~ZMqPubSubPrimaryStrategy()
 void ZMqPubSubPrimaryStrategy::setupSend(const std::string& address)
 {
    tcpPortAddress = tcpPortAddressHeader + address;
-   LOG(debug) << "on " << tcpPortAddress;
+   LOG(info) << "on " << tcpPortAddress;
    socket_.bind(tcpPortAddress);
 }
 
@@ -32,7 +32,7 @@ bool ZMqPubSubPrimaryStrategy::send(const std::string& address, HDLCFrameBodyPtr
 {
    bool sentState{ true };
    const std::string sentMessage = toString(frame->build());
-   LOG(debug) << "Message: " << sentMessage;
+   LOG(info) << sentMessage;
 
    sentState &= s_send(socket_, "dupa", zmq::send_flags::sndmore);
    sentState &= s_send(socket_, sentMessage);

@@ -24,7 +24,7 @@ void ZMqPubSubSecondaryStrategy::setupSend(const std::string& address)
 void ZMqPubSubSecondaryStrategy::setupReceive(const std::string& address)
 {
    tcpPortAddress = tcpPortAddressHeader + address;
-   LOG(debug) << "from " << tcpPortAddress;
+   LOG(info) << "from " << tcpPortAddress;
    socket_.connect(tcpPortAddress);
    socket_.setsockopt(ZMQ_SUBSCRIBE, "dupa", true);
 }
@@ -40,7 +40,7 @@ HDLCFramePtr ZMqPubSubSecondaryStrategy::receive(const std::string &address)
    std::string message = s_recv(socket_);
    auto recFrame{
            std::make_shared<HDLCFrame>(HDLCFrameBodyInterpreter().apply(message)) };
-   LOG(debug) << toString("Received Message: ", recFrame->build());
+   LOG(info) << toString(recFrame->build());
    return recFrame;
 }
 

@@ -30,7 +30,7 @@ void ZMqReqRepSecondaryStrategy::setupReceive(const std::string& address)
 
 bool ZMqReqRepSecondaryStrategy::send(const std::string &address, HDLCFrameBodyPtr frame)
 {
-   const std::string sentMessage = toString(frame->build());
+   const std::string sentMessage = toString(HDLCFrame(frame).build());
    LOG(info) << sentMessage;
    return s_send(socket_, sentMessage);
 }
